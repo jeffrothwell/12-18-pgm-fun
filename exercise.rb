@@ -34,12 +34,11 @@ project = {
   ]
 }
 
-# go through each element of the array found at the key :steps
-# each element of this array is a hash itslef
-
 delegate_to = 0  #this is a simple indexer that will allow me to
 # =>              control who gets the project
 
+# go through each element of the array found at the key :steps
+# each element of this array is a hash itslef
 delegated_project = project[:steps].each do |step|
   # into each of these hashes we will assign a new key/value pair
   # where they key is an element of the array found at the key :committee
@@ -58,4 +57,7 @@ end
 # project array
 project[:steps] = delegated_project
 
-puts project
+#just want to output to see if it works
+p project
+
+# it works!!  this one was tough to solve, thanks!
