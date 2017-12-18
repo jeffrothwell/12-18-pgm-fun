@@ -1,3 +1,5 @@
+require "pp"
+
 project = {
   committee: ["Stella", "Salma", "Kai"],
   title: "Very Important Project",
@@ -33,31 +35,38 @@ project = {
     }
   ]
 }
-
-delegate_to = 0  #this is a simple indexer that will allow me to
-# =>              control who gets the project
-
 # go through each element of the array found at the key :steps
 # each element of this array is a hash itslef
-delegated_project = project[:steps].each do |step|
+project[:steps].each do |step|
   # into each of these hashes we will assign a new key/value pair
-  # where they key is an element of the array found at the key :committee
+  # where they value is an element of the array found at the key :committee
   # in the overall hash (project)
-  step[:owner] = project[:committee][delegate_to]
-  if delegate_to == 2
-    delegate_to = 0  #reset the indexer after giving Kai a project
-  else
-    delegate_to += 1
-  end
+  step[:owner] = project[:committee].first
+  project[:committee].rotate!
 end
 
-# at this point we haven't actually modified the project hash.
-# I just have this delegated array of steps, which I can now
-# reassign to the value found at the key :steps in the original
-# project array
-project[:steps] = delegated_project
+# just want to output to see if it works
+pp project
+# it works!!
 
-#just want to output to see if it works
-p project
 
-# it works!!  this one was tough to solve, thanks!
+#what follows is how I originally did it.  Sean showed me some awesome
+# tricks with using .first and .rotate methods.  Thanks Sean!
+# delegate_to = 0  #this is a simple indexer that will allow me to
+# # =>              control who gets the project
+#
+# # go through each element of the array found at the key :steps
+# # each element of this array is a hash itslef
+# # delegated_project = project[:steps].each do |step|
+# project[:steps].each do |step|
+#   # into each of these hashes we will assign a new key/value pair
+#   # where they key is an element of the array found at the key :committee
+#   # in the overall hash (project)
+#   step[:owner] = project[:committee][delegate_to]
+#   if delegate_to == 2
+#     delegate_to = 0  #reset the indexer after giving Kai a project
+#   else
+#     delegate_to += 1
+#   end
+# end
+#
